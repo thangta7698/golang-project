@@ -1,0 +1,31 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alert_rules.yml"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'go-training-system'
+    static_configs:
+      - targets: ['host.docker.internal:8080']
+    metrics_path: '/metrics'
+    scrape_interval: 5s
+
+  - job_name: 'user-service-nodejs'
+    static_configs:
+      - targets: ['host.docker.internal:4000']
+    metrics_path: '/metrics'
+    scrape_interval: 5s
+
+  - job_name: 'loki'
+    static_configs:
+      - targets: ['loki:3100']
+
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
